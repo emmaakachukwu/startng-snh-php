@@ -41,7 +41,7 @@ if ( isset($_SESSION['loggedIn']) && !empty($_SESSION['loggedIn']) ) {
             </p>
 
             <p>
-                <a href="forgot.php">Forgot Password</a>
+                <a href="forgot.php">Forgot Password</a> |
                 <a href="register.php">Don't have an account? Register</a>
             </p>
         </form>

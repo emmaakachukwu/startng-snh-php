@@ -2,9 +2,8 @@
 session_start();
 require_once("functions/alert.php");
 require_once("functions/redirect.php");
-require_once("functions/email.php");
-require_once("functions/user.php");
 require_once("functions/token.php");
+require_once("functions/user.php");
 
 $errorCount = 0;
 
@@ -30,7 +29,6 @@ if ( $errorCount > 0 ) {
         $userObject = json_decode(file_get_contents("db/users/".$currentUser->email.'.json'));
         $passwordFromDB = $userObject->password;
         if ( password_verify($password, $passwordFromDB) ) {
-            //redirect to dashboard
             $logintime = date('d M, Y h:i a');
             $_SESSION['loggedIn'] = $userObject->id;
             $_SESSION['email'] = $userObject->email;

@@ -1,6 +1,4 @@
 <?php
-require_once("alert.php");
-require_once("redirect.php");
 
 function send_email($subject="", $message="", $email=""){   
     $headers = "From: no-reply@snh.org" . "\r\n" . "CC: emma@snh.org";

@@ -44,20 +44,19 @@ if ( $errorCount > 0 ) {
             'designation' => $designation,
             'department' => $department,
             'registered_on' => date('d M, Y h:i a')
-        ];
-    
+        ];    
 
         $userExists = find_user($email);
         if ( $userExists ) {
-            $_SESSION['error'] = "Registration failed, user already exists";
-            header("Location: register.php");
+            set_alert('error', "Registration failed, user already exists");
+            redirect_to("register.php");
             die();
         }
     
         save_user($userObject);
         
-        $_SESSION['message'] = "Registration Successful, you can now login ".$first_name;
-        header("Location: login.php");
+        set_alert('message', "Registration Successful, you can now login ".$first_name);
+        redirect_to("login.php");
         die();
     }
     header("Location: register.php");

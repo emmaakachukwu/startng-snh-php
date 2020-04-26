@@ -1,19 +1,17 @@
 <?php
 
-function print_error(){
-    if ( isset($_SESSION['error']) && !empty($_SESSION['error']) ) {
-        echo "<span style='color: res'>" . $_SESSION['error'] . "</span>";
-        session_destroy();
-    }
-}
-
 function print_alert(){
     $types = ['message', 'error', 'info'];
-    $color = ['success', 'info', 'danger'];
+    $color = ['success', 'danger', 'info'];
     for($i = 0; $i < count($types); $i++){
         if ( isset($_SESSION[$types[$i]]) && !empty($_SESSION[$types[$i]]) ) {
             echo "<div class='alert alert-".$color[$i]."' role='alert'>" . $_SESSION[$types[$i]] . "</div>";
-            session_destroy();
+            unset($_SESSION[$types[$i]]);
+            // foreach($_SESSION as $key => $val){
+            //     if ($key !== 'loggedIn' && $key !== 'designation'){
+            //         unset($_SESSION[$key]);
+            //     }
+            // }
         }
     }
 }

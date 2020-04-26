@@ -22,15 +22,14 @@ session_start();
         <?php if ( !isset($_SESSION['loggedIn']) ) { ?>
             <a class="p-2 text-dark" href='login.php'>Login</a>
             <a class="btn btn-primary" href='register.php'>Register</a>
-            <!-- <a class="p-2 text-dark" href='forgot.php'>Forgot Password</a> -->
         <?php } else { ?>
             <?php
             if ( $_SESSION['designation'] == 'Medical Team (MT)' ) { ?>
             <a class="p-2 text-dark" href='medicalteam.php'>Dashboard</a>
             <?php } else if ( $_SESSION['designation'] == 'Patient' ) { ?>
             <a class="p-2 text-dark" href='patient.php'>Dashboard</a>
-            <a class="p-2 text-dark" href='logout.php'>Logout</a>
             <?php } ?>
+            <a class="p-2 text-dark" href='logout.php'>Logout</a>
             <a class="p-2 text-dark" href='reset.php'>Reset Password</a>
         <?php } ?>
     </nav>
