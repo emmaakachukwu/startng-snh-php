@@ -110,7 +110,7 @@ if ( isset($_SESSION['loggedIn']) && !empty($_SESSION['loggedIn']) ) {
                 type='text' class="form-control" name='department' placeholder='Department'/>
             </p>
             <p>
-                <button class="btn btn-success" type='submit'>Register</button>
+                <button class="btn btn-sm btn-success" type='submit'>Register</button>
             </p>
             <p>
                 <a href="forgot.php">Forgot Password</a>

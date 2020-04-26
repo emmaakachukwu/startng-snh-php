@@ -9,10 +9,10 @@ function print_error(){
 
 function print_alert(){
     $types = ['message', 'error', 'info'];
-    $color = ['green', 'grey', 'red'];
+    $color = ['success', 'info', 'danger'];
     for($i = 0; $i < count($types); $i++){
         if ( isset($_SESSION[$types[$i]]) && !empty($_SESSION[$types[$i]]) ) {
-            echo "<span style='color:" . $color[$i] . "'>" . $_SESSION[$types[$i]] . "</span>";
+            echo "<div class='alert alert-".$color[$i]."' role='alert'>" . $_SESSION[$types[$i]] . "</div>";
             session_destroy();
         }
     }

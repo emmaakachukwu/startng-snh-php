@@ -27,7 +27,7 @@ if ( $errorCount > 0 ) {
     $currentUser = find_user($email);
 
     if ( $currentUser ) {
-        $userObject = json_decode(file_get_contents("db/users/".$currentUser));
+        $userObject = json_decode(file_get_contents("db/users/".$currentUser->email.'.json'));
         $passwordFromDB = $userObject->password;
         if ( password_verify($password, $passwordFromDB) ) {
             //redirect to dashboard
@@ -40,6 +40,7 @@ if ( $errorCount > 0 ) {
             $_SESSION['lastlogin'] = $userObject->lastlogin;
             $_SESSION['department'] = $userObject->department;
             $_SESSION['registered_on'] = $userObject->registered_on;
+            $_SESSION['designation'] = $userObject->designation;
 
             $userObject->lastlogin = $logintime; //record the current login time as the last login to the DB
             file_put_contents("db/users/".$email.".json", json_encode($userObject));
