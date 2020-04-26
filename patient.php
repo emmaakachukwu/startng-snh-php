@@ -1,5 +1,6 @@
 <?php
 include_once("lib/header.php");
+require_once("functions/alert.php");
 if ( !isset($_SESSION['loggedIn']) ) {
     //redirect to dashboard
     header("Location: login.php");
@@ -15,6 +16,11 @@ Welcome, <?php echo $_SESSION['fullname']; ?>, You are logged in as (<?php echo 
 <p><b>Date of last login: </b> <?php echo $_SESSION['lastlogin']; ?> </p>
 <hr>
 
+<p>
+    <?php
+        print_alert();
+    ?>
+</p>
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">What do you want to do?</h1>
     <p>
