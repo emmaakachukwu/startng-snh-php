@@ -34,8 +34,6 @@ if ( $errorCount > 0 ) {
     } else if ( strlen($email) < 5 ) { //check if email is less than 5
         $_SESSION['error'] = "Email must have at least five characters";
     } else {
-        $allUsers = scandir("db/users/");
-        $newUserId = count($allUsers)-1;
         $userObject = [
             'id' => $newUserId,
             'first_name' => $first_name,

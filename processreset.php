@@ -1,9 +1,14 @@
 <?php
 session_start();
+require_once("functions/alert.php");
+require_once("functions/redirect.php");
+require_once("functions/email.php");
+require_once("functions/user.php");
+require_once("functions/token.php");
 
 $errorCount = 0;
 
-if ( !$_SESSION['loggedIn'] ) {
+if ( !is_user_loggedIn() ) {
     $token = $_POST['last_name'] != "" ? $_POST['token'] : $errorCount++;
     $_SESSION['token'] = $token;
 }
@@ -14,57 +19,33 @@ $password = $_POST['password'] != "" ? $_POST['password'] : $errorCount++;
 $_SESSION['email'] = $email;
 
 if ( $errorCount > 0 ) {
-    $_SESSION['error'] = "You have " . $errorCount . " errors  in your form submission";
-    header("Location: reset.php");
+    set_alert('error', "You have " . $errorCount . " errors  in your form submission");
+    redirect_to("reset.php");
 } else {
-    $allUserTokens = scandir("db/tokens/");
-    $countAllUserTokens = count($allUserTokens);
-
-    for ( $counter = 0; $counter < $countAllUserTokens; $counter++ ) {
-        $currentTokenFile = $allUserTokens[$counter];
-
-        if ( $currentTokenFile == $email . ".json" ) {
-            $tokenObject = json_decode(file_get_contents("db/users/".$currentTokenFile));
-            $tokenFromDB = $tokenObject->token;
-
-            if ( $_SESSION['loggedIn'] ) {
-                $checkToken = true;
-            } else {
-                $checkToken = $tokenFromDB == $token;
-            }
-
-            if ( $checkToken ) {
-                $allUsers = scandir("db/users/");
-                for ( $i = 0; $i < count($allUsers); $i++ ) {
-                    $currentUser = $allUsers[$i];
+    $checkToken = is_user_loggedIn() ? true : find_token($email);
+    if ( $checkToken ) {
+        $userExists = find_user($email);
+        if ( $userExists ) {
+            $userObject = find_user($email);
+            $userObject->password = password_hash($password, PASSWORD_DEFAULT);
             
-                    if ( $currentUser == $email . ".json" ) {
-                        $userObject = json_decode(file_get_contents("db/users/".$currentUser));
-                        $userObject->password = password_hash($password, PASSWORD_DEFAULT);
-                        
-                        unlink("db/users/".$currentUser);
+            unlink("db/users/".$currentUser);
+            unlink("db/token/".$currentUser);
 
-                        file_put_contents("db/users/".$email.".json", json_encode($userObject));
+            save_user($userObject);
 
-                        $_SESSION['message'] = "Password R eset Successful, you can now login";
-                        $subject = "Password reset link";
-                        $message = "Your account has been updated. If you did not initiate a password reset, visit snh.org";
-                        $headers = "From: no-reply@snh.org" . "\r\n" . "CC: emma@snh.org";
+            set_alert('message', "Password R eset Successful, you can now login");
 
-                        $try = mail($email, $subject, $message, $headers);
-                        if ( $try ) {
-                            $_SESSION['message'] = "Password reset has been sent to your email: " . $email;
-                            header("Location: login.php");
-                        } else 
-                        header("Location: login.php");
-                        die();
-                    }
-                }
-            }
+            $subject = "Password reset link";
+            $message = "Your account has been updated. If you did not initiate a password reset, visit snh.org";
             
-        }
+            send_email($subject, $message, $email);
+
+            redirect_to("login.php");
+            return;
+        }    
     }
 
-    $_SESSION['error'] = "Password Reset Failed, token/email invalid or expired";
-    header("Location: login.php");
+    set_alert('error', "Password Reset Failed, token/email invalid or expired");
+    redirect_to("login.php");
 }
