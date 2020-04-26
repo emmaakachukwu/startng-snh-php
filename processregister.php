@@ -16,7 +16,7 @@ $_SESSION['first_name'] = $first_name;
 $_SESSION['last_name'] = $last_name;
 $_SESSION['email'] = $email;
 $_SESSION['gender'] = $gender;
-$_SESSION['designation'] = $designfation;
+$_SESSION['designation'] = $designation;
 $_SESSION['department'] = $department;
 
 //validation

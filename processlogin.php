@@ -32,11 +32,9 @@ if ( $errorCount > 0 ) {
             $logintime = date('d M, Y h:i a');
             $_SESSION['loggedIn'] = $userObject->id;
             $_SESSION['email'] = $userObject->email;
-            $_SESSION['fullname'] = $userObject->first_name.' '.$userObject->last_name;
-            $_SESSION['role'] = $userObject->designation;
+            $_SESSION['fullname'] = ucfirst($userObject->first_name).' '.ucfirst($userObject->last_name);
             $_SESSION['logintime'] = $logintime; //record user login time
             $_SESSION['lastlogin'] = $userObject->lastlogin;
-            $_SESSION['department'] = $userObject->department;
             $_SESSION['registered_on'] = $userObject->registered_on;
             $_SESSION['designation'] = $userObject->designation;
 
@@ -48,7 +46,6 @@ if ( $errorCount > 0 ) {
             } else {
                 redirect_to("medicalteam.php");
             }
-            // header("Location: dashboard.php");
             die();
         }
     }
