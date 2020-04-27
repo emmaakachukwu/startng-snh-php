@@ -9,44 +9,54 @@ if ( !is_user_loggedIn() && !is_token_set() ) {
 }
 
 ?>
+<div class="container">
+    <div class="row">
+        <h3>Reset password</h3>
+    </div>
+    <div class="row">
+        <p>Reset Password associated with your account</p>
+    </div>
 
-<h3>Reset password</h3>
-<p>Reset Password associated with your account : [email]</p>
+    <div class="row">
+        <form action="processreset.php" method='POST'>
+            <p>
+                <?php
+                    print_alert();
+                ?>
+            </p>
 
-<form action="processreset.php" method='POST'>
-    <p>
-        <?php
-            print_alert();
-        ?>
-    </p>
+            <?php 
+                if ( !$_SESSION['loggedIn'] ) { ?>
+                <input 
+                    <?php
+                        if ( is_token_set_in_session() ) {
+                            echo "value='" . $_SESSION['token'] . "' ";
+                        } else {
+                            echo "value='" . $_GET['token'] . "' ";
+                        }
+                    ?>
+                type='hidden' class='form-control' name='token' />
+            <?php } ?>
+            
+            <p>
+                <label>Email</label><br/>
+                <input class='form-control' type='email' name='email' placeholder='Email'/>
+            </p>
 
-    <?php 
-        if ( !$_SESSION['loggedIn'] ) { ?>
-        <input 
-            <?php
-                if ( is_token_set_in_session() ) {
-                    echo "value='" . $_SESSION['token'] . "' ";
-                } else {
-                    echo "value='" . $_GET['token'] . "' ";
-                }
-            ?>
-        type='hidden' name='token' />
-    <?php } ?>
-    
-    <p>
-        <label>Email</label><br/>
-        <input type='email' name='email' placeholder='Email'/>
-    </p>
+            <p>
+                <label>Enter new Password</label><br/>
+                <input class='form-control' type='password' name='password' placeholder='Password'/>
+            </p>
 
-    <p>
-        <label>Enter new Password</label><br/>
-        <input type='password' name='password' placeholder='Password'/>
-    </p>
+            <p>
+                <button type='submit' class='btn btn-sm btn-primary'>Reset Password</button>
+            </p>
+        </form>
+    </div>
+</div>
 
-    <p>
-        <button type='submit'>Reset Password</button>
-    </p>
-</form>
+
+
 
 <?php
 require_once("lib/footer.php");

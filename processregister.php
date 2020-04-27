@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once("functions/user.php");
+require_once("functions/alert.php");
+require_once("functions/redirect.php");
 
 $errorCount = 0;
 
@@ -35,7 +37,7 @@ if ( $errorCount > 0 ) {
         $_SESSION['error'] = "Email must have at least five characters";
     } else {
         $userObject = [
-            'id' => $newUserId,
+            'id' => count(scandir("db/users/")) - 1,
             'first_name' => $first_name,
             'last_name' => $last_name,
             'email' => $email,
@@ -59,6 +61,6 @@ if ( $errorCount > 0 ) {
         redirect_to("login.php");
         die();
     }
-    header("Location: register.php");
+    redirect_to("register.php");
     
 }

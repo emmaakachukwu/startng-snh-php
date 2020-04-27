@@ -43,8 +43,10 @@ if ( $errorCount > 0 ) {
             // redirect users to different pages based on their Access level
             if ( $userObject->designation == 'Patient' ) {
                 redirect_to("patient.php");
-            } else {
+            } else if ( $userObject->designation == 'Medical Team (MT)' ) {
                 redirect_to("medicalteam.php");
+            } else if ( $userObject->designation == 'Super Admin' ) {
+                redirect_to("superadmin.php");
             }
             die();
         }

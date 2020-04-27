@@ -1,9 +1,10 @@
 <?php
 include_once("lib/header.php");
 require_once("functions/alert.php");
+require_once("functions/redirect.php");
+
 if ( !isset($_SESSION['loggedIn']) ) {
-    //redirect to dashboard
-    header("Location: login.php");
+    redirect_to("login.php");
 } else {
     $userObject = json_decode(file_get_contents("db/users/".$_SESSION['email'].'.json'));
 }

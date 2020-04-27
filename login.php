@@ -1,9 +1,16 @@
 <?php
 include_once("lib/header.php");
 require("functions/alert.php");
+require("functions/redirect.php");
+
 if ( isset($_SESSION['loggedIn']) && !empty($_SESSION['loggedIn']) ) {
-    //redirect to dashboard
-    header("Location: dashboard.php");
+    if( $_SESSION['designation'] == 'Medical Team (MT)' ) {
+        redirect_to("medicalteam.php");
+    } else if ( $_SESSION['designation'] == 'Patient' ) {
+        redirect_to("patients.php"); 
+    } else if ( $_SESSION['designation'] == 'Super Admin' ) {
+        redirect_to("superadmin.php");
+    }
 }
 
 ?>
