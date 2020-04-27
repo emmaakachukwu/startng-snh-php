@@ -24,7 +24,7 @@ $_SESSION['department'] = $department;
 //validation
 if ( $errorCount > 0 ) {
     $_SESSION['error'] = "You have " . $errorCount . " errors  in your form submission";
-    redirect_to("register.php");
+    redirect_to("superadmin.php");
 } else {
     // Validating for names having numbers
     if ( !ctype_alpha($first_name) || !ctype_alpha($last_name) ) {
@@ -51,16 +51,16 @@ if ( $errorCount > 0 ) {
         $userExists = find_user($email);
         if ( $userExists ) {
             set_alert('error', "Registration failed, user already exists");
-            redirect_to("register.php");
+            redirect_to("superadmin.php");
             die();
         }
     
         save_user($userObject);
         
-        set_alert('message', "Registration Successful, you can now login ".$first_name);
-        redirect_to("login.php");
+        set_alert('message', "User Registration Successful");
+        redirect_to("superadmin.php");
         die();
     }
-    redirect_to("register.php");
+    redirect_to("superadmin.php");
     
 }
