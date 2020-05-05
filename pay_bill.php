@@ -29,7 +29,7 @@
         // send email of a successful payment
         $subject = "Payment Notification";
         $message = "Your payment was successful";
-        // send_email($subject, $message, $email);
+        send_email($subject, $message, $email);
         
         set_alert('message', 'Payment Successfull');
     }
