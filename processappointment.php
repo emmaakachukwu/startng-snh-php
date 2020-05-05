@@ -25,6 +25,9 @@ if ( $errorCount > 0 ) {
 } else {
     $_POST['id'] = count(scandir("db/appointments/")) - 1;
     $_POST['fullname'] = $_SESSION['fullname'];
+    $_POST['email'] = $_SESSION['email'];
+    $_POST['status'] = 'Not Paid'; // Payment status
+    $_POST['date_initiated'] = date('d M, Y');
 
     file_put_contents("db/appointments/".$_POST['id'].".json", json_encode($_POST));
     set_alert('message', 'Appointment has been booked');

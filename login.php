@@ -7,7 +7,7 @@ if ( isset($_SESSION['loggedIn']) && !empty($_SESSION['loggedIn']) ) {
     if( $_SESSION['designation'] == 'Medical Team (MT)' ) {
         redirect_to("medicalteam.php");
     } else if ( $_SESSION['designation'] == 'Patient' ) {
-        redirect_to("patients.php"); 
+        redirect_to("patient.php"); 
     } else if ( $_SESSION['designation'] == 'Super Admin' ) {
         redirect_to("superadmin.php");
     }

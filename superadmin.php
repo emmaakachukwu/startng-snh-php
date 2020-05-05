@@ -140,8 +140,8 @@ foreach($all_users as $key => $value){
         <h3>Staff List</h3>
         <?php if ( count($medicalteam) < 1 ) { ?>
             <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-            <h1 class="display-4">You have no registered staff</h1>
-        </div>
+                <h1 class="display-4">You have no registered staff</h1>
+            </div>
         <?php } else { ?>
             <table class="table table-responsive">
                 <thead>
@@ -204,6 +204,51 @@ foreach($all_users as $key => $value){
                 </tbody>
             </table>
         <?php } ?>
+    </div>
+    <br>
+    <div class="row">
+        <h3>Appointments</h3>
+        <?php
+            $all_appointments = scandir("db/appointments");
+            $appointments = [];
+            foreach( $all_appointments as $key => $value ) {
+                $data = json_decode(file_get_contents("db/appointments/".$value));
+                $data ? array_push($appointments, $data) : "";
+            }
+
+            if ( !$appointments ) { ?>
+                <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+                    <h1 class="display-4">You have no appointments</h1>
+                </div>
+            <?php } else { ?>
+                <table class="table table-responsive">
+                    <thead>
+                        <th>S/N</th>
+                        <th>Patient's Name</th>
+                        <th>Date of Appointment</th>
+                        <th>Time of appointment</th>
+                        <th>Nature of appointment</th>
+                        <th>Initial complaint</th>
+                        <th>Payment Status</th>
+                    </thead>
+
+                    <tbody>
+                        <?php
+                        $sn = 1;
+                        foreach($appointments as $key => $value){ ?>
+                            <tr>
+                                <td><?php echo $sn; ?></td>
+                                <td><?php echo $appointments[$key]->fullname; ?></td>
+                                <td><?php echo date('d M, Y', strtotime($appointments[$key]->date)); ?></td>
+                                <td><?php echo date('h:m a', strtotime($appointments[$key]->time)); ?></td>
+                                <td><?php echo $appointments[$key]->nature; ?></td>
+                                <td><?php echo $appointments[$key]->complaint; ?></td>
+                                <td><?php echo $appointments[$key]->status; ?></td>
+                            </tr>
+                        <?php $sn++; } ?>
+                    </tbody>
+                </table>
+            <?php } ?>
     </div>
 </div>
 

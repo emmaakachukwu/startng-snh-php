@@ -45,6 +45,7 @@ if ( count($dept_appointments) < 1 ) {
                     <th>Time of appointment</th>
                     <th>Nature of appointment</th>
                     <th>Initial complaint</th>
+                    <th>Payment Status</th>
                 </thead>
 
                 <tbody>
@@ -58,6 +59,7 @@ if ( count($dept_appointments) < 1 ) {
                             <td><?php echo date('h:m a', strtotime($dept_appointments[$key]->time)); ?></td>
                             <td><?php echo $dept_appointments[$key]->nature; ?></td>
                             <td><?php echo $dept_appointments[$key]->complaint; ?></td>
+                            <td><?php echo $dept_appointments[$key]->status; ?></td>
                         </tr>
                     <?php $sn++; } ?>
                 </tbody>
